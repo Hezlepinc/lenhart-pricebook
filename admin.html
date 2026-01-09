@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lenhart Price Book - Admin</title>
+    <style>
+        :root {
+            --gray: #6d7b8a;
+            --blue: #3b6e9c;
+            --gold: #c4a35a;
+            --text: #333333;
+            --bg: #f5f5f5;
+            --white: #ffffff;
+            --good: #22c55e;
+            --better: #3b82f6;
+            --best: #a855f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        header {
+            background: var(--gray);
+            color: white;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2d5a80;
+        }
+
+        .btn-success {
+            background: var(--good);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #16a34a;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .upload-section {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 2px dashed #ccc;
+        }
+
+        .upload-section.drag-over {
+            border-color: var(--blue);
+            background: #f0f7ff;
+        }
+
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-section label {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--blue);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .upload-section label:hover {
+            background: #2d5a80;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--blue);
+        }
+
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        .filters {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+
+        .filters input[type="search"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .category-section {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: var(--gray);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .category-header:hover {
+            background: #5a6873;
+        }
+
+        .category-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .category-header .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        .category-packages {
+            display: none;
+        }
+
+        .category-packages.open {
+            display: block;
+        }
+
+        .package-row {
+            display: grid;
+            grid-template-columns: 1fr 100px 80px 150px 150px 100px;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .package-row:hover {
+            background: #f9f9f9;
+        }
+
+        .package-row .name {
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .package-row .name small {
+            display: block;
+            color: #666;
+            font-weight: 400;
+            font-size: 0.75rem;
+        }
+
+        .package-row .price {
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .package-row .hours {
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .tier-select {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 0.75rem;
+        }
+
+        .tier-select.good {
+            background: #dcfce7;
+            border-color: var(--good);
+        }
+
+        .tier-select.better {
+            background: #dbeafe;
+            border-color: var(--better);
+        }
+
+        .tier-select.best {
+            background: #f3e8ff;
+            border-color: var(--best);
+        }
+
+        .upsell-select {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 0.75rem;
+            max-width: 150px;
+        }
+
+        .category-select {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 0.75rem;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tier-badge.good {
+            background: var(--good);
+            color: white;
+        }
+
+        .tier-badge.better {
+            background: var(--better);
+            color: white;
+        }
+
+        .tier-badge.best {
+            background: var(--best);
+            color: white;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--text);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--good);
+        }
+
+        .bulk-actions {
+            background: var(--blue);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .bulk-actions label {
+            font-weight: 500;
+        }
+
+        .bulk-actions select,
+        .bulk-actions button {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.875rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Export modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal h2 {
+            margin-bottom: 1rem;
+        }
+
+        .modal p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        @media (max-width: 900px) {
+            .package-row {
+                grid-template-columns: 1fr;
+                gap: 0.25rem;
+            }
+
+            .package-row > * {
+                padding: 0.25rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lenhart Price Book Admin</h1>
+        <div class="header-actions">
+            <button class="btn btn-outline" onclick="loadFromStorage()">Load Saved</button>
+            <button class="btn btn-outline" onclick="saveToStorage()">Save Progress</button>
+            <button class="btn btn-success" onclick="exportJSON()">Export JSON</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="upload-section" id="uploadSection">
+            <p style="margin-bottom: 1rem; color: #666;">Upload a new CRM export (CSV or XLS) to update packages</p>
+            <input type="file" id="fileInput" accept=".csv,.xls,.xlsx">
+            <label for="fileInput">Choose CSV File</label>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: #999;">Or drag and drop a file here</p>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="value" id="totalPackages">0</div>
+                <div class="label">Total Packages</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="totalCategories">0</div>
+                <div class="label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="assignedTiers">0</div>
+                <div class="label">Tiers Assigned</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="upsellsConfigured">0</div>
+                <div class="label">Upsells Set</div>
+            </div>
+        </div>
+
+        <div class="bulk-actions">
+            <label>Bulk Actions:</label>
+            <select id="bulkCategory">
+                <option value="">Change Category...</option>
+            </select>
+            <select id="bulkTier">
+                <option value="">Set Tier...</option>
+                <option value="good">Good</option>
+                <option value="better">Better</option>
+                <option value="best">Best</option>
+                <option value="">Clear Tier</option>
+            </select>
+            <button class="btn btn-primary" onclick="applyBulkActions()">Apply to Visible</button>
+        </div>
+
+        <div class="filters">
+            <input type="search" id="searchInput" placeholder="Search packages...">
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+            </select>
+            <select id="tierFilter">
+                <option value="">All Tiers</option>
+                <option value="none">No Tier Assigned</option>
+                <option value="good">Good</option>
+                <option value="better">Better</option>
+                <option value="best">Best</option>
+            </select>
+        </div>
+
+        <div id="categoriesContainer"></div>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // State
+        let pricebookData = null;
+        let allCategories = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Try to load existing pricebook.json
+            try {
+                const response = await fetch('data/pricebook.json');
+                if (response.ok) {
+                    pricebookData = await response.json();
+                    // Also check localStorage for any saved changes
+                    const saved = localStorage.getItem('pricebook-admin');
+                    if (saved) {
+                        const savedData = JSON.parse(saved);
+                        // Merge saved tier/upsell data
+                        mergeSavedData(savedData);
+                    }
+                    renderData();
+                }
+            } catch (e) {
+                console.log('No existing pricebook.json found');
+            }
+
+            setupFileUpload();
+            setupFilters();
+        });
+
+        function mergeSavedData(saved) {
+            if (!pricebookData || !saved) return;
+
+            const savedPackages = new Map();
+            saved.categories?.forEach(cat => {
+                cat.packages?.forEach(pkg => {
+                    savedPackages.set(pkg.id, pkg);
+                });
+            });
+
+            pricebookData.categories.forEach(cat => {
+                cat.packages.forEach(pkg => {
+                    const savedPkg = savedPackages.get(pkg.id);
+                    if (savedPkg) {
+                        pkg.tier = savedPkg.tier;
+                        pkg.upsellTo = savedPkg.upsellTo || [];
+                        if (savedPkg.category && savedPkg.category !== pkg.category) {
+                            pkg.category = savedPkg.category;
+                        }
+                    }
+                });
+            });
+        }
+
+        function setupFileUpload() {
+            const uploadSection = document.getElementById('uploadSection');
+            const fileInput = document.getElementById('fileInput');
+
+            uploadSection.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadSection.classList.add('drag-over');
+            });
+
+            uploadSection.addEventListener('dragleave', () => {
+                uploadSection.classList.remove('drag-over');
+            });
+
+            uploadSection.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadSection.classList.remove('drag-over');
+                const file = e.dataTransfer.files[0];
+                if (file) processFile(file);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) processFile(file);
+            });
+        }
+
+        function processFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target.result;
+                if (file.name.endsWith('.csv')) {
+                    parseCSV(content);
+                } else {
+                    showToast('Please use CSV format', false);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSV(content) {
+            const lines = content.split('\n');
+            const headers = parseCSVLine(lines[0]);
+
+            // Find column indices
+            const colMap = {};
+            headers.forEach((h, i) => {
+                const lower = h.toLowerCase().trim();
+                if (lower.includes('internal id')) colMap.id = i;
+                else if (lower === 'name') colMap.name = i;
+                else if (lower.includes('sales price')) colMap.price = i;
+                else if (lower.includes('labor hours')) colMap.hours = i;
+                else if (lower.includes('description')) colMap.description = i;
+                else if (lower.includes('show on mobile')) colMap.showMobile = i;
+            });
+
+            const packages = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+
+                const row = parseCSVLine(lines[i]);
+                const name = row[colMap.name] || '';
+                if (!name) continue;
+
+                const showMobile = row[colMap.showMobile] || 'Yes';
+                if (showMobile.toLowerCase().includes('no')) continue;
+
+                const price = parseFloat((row[colMap.price] || '0').replace(/[$,]/g, '')) || 0;
+                if (price <= 0) continue;
+
+                const displayName = name.replace(/^(AMSFL_|GENFL_)/, '').replace('INSTALL ', '').trim();
+
+                packages.push({
+                    id: row[colMap.id] || String(i),
+                    name: name,
+                    displayName: displayName,
+                    price: price,
+                    laborHours: parseFloat(row[colMap.hours] || '0') || 0,
+                    description: row[colMap.description] || '',
+                    category: categorizePackage(name),
+                    tier: null,
+                    upsellTo: []
+                });
+            }
+
+            // Organize by category
+            const categoryMap = new Map();
+            packages.forEach(pkg => {
+                if (!categoryMap.has(pkg.category)) {
+                    categoryMap.set(pkg.category, { name: pkg.category, packages: [], startingAt: Infinity });
+                }
+                const cat = categoryMap.get(pkg.category);
+                cat.packages.push(pkg);
+                if (pkg.price < cat.startingAt) cat.startingAt = pkg.price;
+            });
+
+            pricebookData = {
+                version: '1.0',
+                lastUpdated: new Date().toISOString(),
+                categories: Array.from(categoryMap.values()).sort((a, b) => a.name.localeCompare(b.name))
+            };
+
+            // Merge with any saved data
+            const saved = localStorage.getItem('pricebook-admin');
+            if (saved) {
+                mergeSavedData(JSON.parse(saved));
+            }
+
+            renderData();
+            showToast(`Loaded ${packages.length} packages!`, true);
+        }
+
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') {
+                    if (inQuotes && line[i + 1] === '"') {
+                        current += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
+
+        function categorizePackage(name) {
+            const patterns = [
+                [/(PANEL|SERVICE.*PANEL|SUB PANEL)/i, 'Panel Upgrades'],
+                [/SURGE/i, 'Surge Protection'],
+                [/(E CAR|EV CIRCUIT|EV CHARGER)/i, 'EV Charging'],
+                [/HOT TUB/i, 'Hot Tub Circuits'],
+                [/240V.*CKT(?!.*EV)/i, 'Heavy Duty Circuits'],
+                [/(OUTLET.*WP|WP.*OUTLET)/i, 'Exterior Outlets'],
+                [/(FLOOD|SOFFIT|COACH LT|LANDSCAPE)/i, 'Exterior Lighting'],
+                [/(RCAN|WAFER|RECESSED)/i, 'Recessed Lighting'],
+                [/TAPE LT/i, 'LED Tape Lighting'],
+                [/(OUTLET|SWITCH|DIMMER|RECEPTACLE)(?!.*WP)/i, 'Outlets & Switches'],
+                [/(FIXTURE|LIGHT BOX|CHANDELIER|PENDANT)/i, 'Interior Lighting'],
+                [/(FAN|CEILING FAN)/i, 'Ceiling Fans'],
+                [/(EXHAUST|BATH FAN|VENT FAN)/i, 'Bathrooms'],
+                [/(GEN |GENERATOR|18KW|22KW|24KW|26KW)/i, 'Home Generators'],
+                [/INTERLOCK/i, 'Portable Generator'],
+                [/(AIR CONDITIONER|A\/C|AC CIRCUIT)/i, 'HVAC Circuits'],
+                [/(SMOKE|CARBON|CO DETECTOR)/i, 'Safety Devices'],
+                [/(GFCI|GFI)/i, 'GFCI Protection'],
+                [/BREAKER/i, 'Breakers'],
+            ];
+
+            for (const [regex, category] of patterns) {
+                if (regex.test(name)) return category;
+            }
+            return 'Other Services';
+        }
+
+        function setupFilters() {
+            document.getElementById('searchInput').addEventListener('input', filterPackages);
+            document.getElementById('categoryFilter').addEventListener('change', filterPackages);
+            document.getElementById('tierFilter').addEventListener('change', filterPackages);
+        }
+
+        function renderData() {
+            if (!pricebookData) return;
+
+            // Update stats
+            let totalPackages = 0;
+            let assignedTiers = 0;
+            let upsellsConfigured = 0;
+
+            pricebookData.categories.forEach(cat => {
+                cat.packages.forEach(pkg => {
+                    totalPackages++;
+                    if (pkg.tier) assignedTiers++;
+                    if (pkg.upsellTo && pkg.upsellTo.length > 0) upsellsConfigured++;
+                });
+            });
+
+            document.getElementById('totalPackages').textContent = totalPackages;
+            document.getElementById('totalCategories').textContent = pricebookData.categories.length;
+            document.getElementById('assignedTiers').textContent = assignedTiers;
+            document.getElementById('upsellsConfigured').textContent = upsellsConfigured;
+
+            // Update category filter
+            const categoryFilter = document.getElementById('categoryFilter');
+            const bulkCategory = document.getElementById('bulkCategory');
+            allCategories = pricebookData.categories.map(c => c.name);
+
+            categoryFilter.innerHTML = '<option value="">All Categories</option>';
+            bulkCategory.innerHTML = '<option value="">Change Category...</option>';
+
+            allCategories.forEach(cat => {
+                categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`;
+                bulkCategory.innerHTML += `<option value="${cat}">${cat}</option>`;
+            });
+
+            // Render categories
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+
+            pricebookData.categories.forEach((cat, catIndex) => {
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                section.dataset.category = cat.name;
+
+                const tierCounts = { good: 0, better: 0, best: 0 };
+                cat.packages.forEach(pkg => {
+                    if (pkg.tier) tierCounts[pkg.tier]++;
+                });
+
+                section.innerHTML = `
+                    <div class="category-header" onclick="toggleCategory(${catIndex})">
+                        <h2>${cat.name} <span class="badge">${cat.packages.length} packages</span></h2>
+                        <div>
+                            ${tierCounts.good ? `<span class="tier-badge good">${tierCounts.good} Good</span>` : ''}
+                            ${tierCounts.better ? `<span class="tier-badge better">${tierCounts.better} Better</span>` : ''}
+                            ${tierCounts.best ? `<span class="tier-badge best">${tierCounts.best} Best</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="category-packages" id="cat-${catIndex}">
+                        ${cat.packages.map((pkg, pkgIndex) => renderPackageRow(pkg, catIndex, pkgIndex)).join('')}
+                    </div>
+                `;
+
+                container.appendChild(section);
+            });
+        }
+
+        function renderPackageRow(pkg, catIndex, pkgIndex) {
+            const tierClass = pkg.tier ? pkg.tier : '';
+            const allPackageOptions = getAllPackageOptions(pkg.id);
+
+            return `
+                <div class="package-row" data-id="${pkg.id}" data-tier="${pkg.tier || ''}">
+                    <div class="name">
+                        ${pkg.displayName}
+                        <small>${pkg.name}</small>
+                    </div>
+                    <div class="price">$${pkg.price.toLocaleString()}</div>
+                    <div class="hours">${pkg.laborHours}h</div>
+                    <select class="tier-select ${tierClass}" onchange="setTier('${pkg.id}', this.value)">
+                        <option value="">No Tier</option>
+                        <option value="good" ${pkg.tier === 'good' ? 'selected' : ''}>Good</option>
+                        <option value="better" ${pkg.tier === 'better' ? 'selected' : ''}>Better</option>
+                        <option value="best" ${pkg.tier === 'best' ? 'selected' : ''}>Best</option>
+                    </select>
+                    <select class="upsell-select" onchange="setUpsell('${pkg.id}', this.value)" title="Upsell to...">
+                        <option value="">Add upsell...</option>
+                        ${allPackageOptions}
+                    </select>
+                    <select class="category-select" onchange="setCategory('${pkg.id}', this.value)">
+                        ${allCategories.map(cat => `<option value="${cat}" ${cat === pkg.category ? 'selected' : ''}>${cat}</option>`).join('')}
+                    </select>
+                </div>
+            `;
+        }
+
+        function getAllPackageOptions(excludeId) {
+            let options = '';
+            pricebookData.categories.forEach(cat => {
+                options += `<optgroup label="${cat.name}">`;
+                cat.packages.forEach(pkg => {
+                    if (pkg.id !== excludeId) {
+                        options += `<option value="${pkg.id}">${pkg.displayName} - $${pkg.price}</option>`;
+                    }
+                });
+                options += '</optgroup>';
+            });
+            return options;
+        }
+
+        function toggleCategory(index) {
+            const el = document.getElementById(`cat-${index}`);
+            el.classList.toggle('open');
+        }
+
+        function setTier(packageId, tier) {
+            const pkg = findPackage(packageId);
+            if (pkg) {
+                pkg.tier = tier || null;
+                renderData();
+                saveToStorage();
+            }
+        }
+
+        function setUpsell(packageId, upsellId) {
+            if (!upsellId) return;
+
+            const pkg = findPackage(packageId);
+            if (pkg) {
+                if (!pkg.upsellTo) pkg.upsellTo = [];
+                if (!pkg.upsellTo.includes(upsellId)) {
+                    pkg.upsellTo.push(upsellId);
+                    renderData();
+                    saveToStorage();
+                    showToast('Upsell added!', true);
+                }
+            }
+        }
+
+        function setCategory(packageId, newCategory) {
+            // Find and remove from old category
+            let pkg = null;
+            let oldCatIndex = -1;
+            let pkgIndex = -1;
+
+            pricebookData.categories.forEach((cat, ci) => {
+                cat.packages.forEach((p, pi) => {
+                    if (p.id === packageId) {
+                        pkg = p;
+                        oldCatIndex = ci;
+                        pkgIndex = pi;
+                    }
+                });
+            });
+
+            if (!pkg || pkg.category === newCategory) return;
+
+            // Remove from old category
+            pricebookData.categories[oldCatIndex].packages.splice(pkgIndex, 1);
+
+            // Add to new category
+            pkg.category = newCategory;
+            let newCat = pricebookData.categories.find(c => c.name === newCategory);
+            if (!newCat) {
+                newCat = { name: newCategory, packages: [], startingAt: pkg.price };
+                pricebookData.categories.push(newCat);
+                pricebookData.categories.sort((a, b) => a.name.localeCompare(b.name));
+            }
+            newCat.packages.push(pkg);
+            newCat.packages.sort((a, b) => a.price - b.price);
+            newCat.startingAt = Math.min(newCat.startingAt, pkg.price);
+
+            // Remove empty categories
+            pricebookData.categories = pricebookData.categories.filter(c => c.packages.length > 0);
+
+            renderData();
+            saveToStorage();
+        }
+
+        function findPackage(id) {
+            for (const cat of pricebookData.categories) {
+                for (const pkg of cat.packages) {
+                    if (pkg.id === id) return pkg;
+                }
+            }
+            return null;
+        }
+
+        function filterPackages() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const tierFilter = document.getElementById('tierFilter').value;
+
+            document.querySelectorAll('.category-section').forEach(section => {
+                const catName = section.dataset.category;
+                if (categoryFilter && catName !== categoryFilter) {
+                    section.classList.add('hidden');
+                    return;
+                }
+
+                let hasVisible = false;
+                section.querySelectorAll('.package-row').forEach(row => {
+                    const name = row.querySelector('.name').textContent.toLowerCase();
+                    const tier = row.dataset.tier;
+
+                    let visible = true;
+                    if (search && !name.includes(search)) visible = false;
+                    if (tierFilter === 'none' && tier) visible = false;
+                    if (tierFilter && tierFilter !== 'none' && tier !== tierFilter) visible = false;
+
+                    row.classList.toggle('hidden', !visible);
+                    if (visible) hasVisible = true;
+                });
+
+                section.classList.toggle('hidden', !hasVisible);
+
+                // Auto-expand filtered categories
+                if (hasVisible && (search || tierFilter)) {
+                    const packagesDiv = section.querySelector('.category-packages');
+                    packagesDiv.classList.add('open');
+                }
+            });
+        }
+
+        function applyBulkActions() {
+            const bulkCategory = document.getElementById('bulkCategory').value;
+            const bulkTier = document.getElementById('bulkTier').value;
+
+            if (!bulkCategory && bulkTier === '') {
+                showToast('Select an action first', false);
+                return;
+            }
+
+            let count = 0;
+            document.querySelectorAll('.package-row:not(.hidden)').forEach(row => {
+                const id = row.dataset.id;
+                const pkg = findPackage(id);
+                if (pkg) {
+                    if (bulkTier !== '') {
+                        pkg.tier = bulkTier || null;
+                    }
+                    count++;
+                }
+            });
+
+            if (count > 0) {
+                renderData();
+                saveToStorage();
+                showToast(`Updated ${count} packages!`, true);
+            }
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('pricebook-admin', JSON.stringify(pricebookData));
+            showToast('Progress saved!', true);
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem('pricebook-admin');
+            if (saved) {
+                pricebookData = JSON.parse(saved);
+                renderData();
+                showToast('Loaded saved progress!', true);
+            } else {
+                showToast('No saved data found', false);
+            }
+        }
+
+        function exportJSON() {
+            if (!pricebookData) {
+                showToast('No data to export', false);
+                return;
+            }
+
+            pricebookData.lastUpdated = new Date().toISOString();
+
+            // Recalculate starting prices
+            pricebookData.categories.forEach(cat => {
+                cat.startingAt = Math.min(...cat.packages.map(p => p.price));
+            });
+
+            const json = JSON.stringify(pricebookData, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pricebook.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showToast('Exported pricebook.json! Copy to data/ folder.', true);
+        }
+
+        function showToast(message, success = true) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show' + (success ? ' success' : '');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+</html>

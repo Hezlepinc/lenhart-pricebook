@@ -1,0 +1,33 @@
+{
+  "name": "Lenhart Electric Price Book",
+  "short_name": "Price Book",
+  "description": "Mobile price book for Lenhart Electric technicians",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#6d7b8a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "utilities"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Search Packages",
+      "url": "/?action=search",
+      "description": "Quick search for packages"
+    }
+  ]
+}

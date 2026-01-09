@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="80" fill="#6d7b8a"/>
+  <g fill="none" stroke="#c4a35a" stroke-width="32" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Lightning bolt -->
+    <path d="M280 80L180 250h100l-40 180 140-210H280l40-140z" fill="#c4a35a"/>
+  </g>
+  <text x="256" y="440" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="white">PRICE</text>
+</svg>
