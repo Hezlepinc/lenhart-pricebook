@@ -235,6 +235,8 @@
         .tier-group-badge.good { background: var(--good); color: white; }
         .tier-group-badge.better { background: var(--better); color: white; }
         .tier-group-badge.best { background: var(--best); color: white; }
+        .tier-group-badge.premium { background: #f59e0b; color: white; }
+        .tier-group-badge.value { background: #10b981; color: white; }
 
         .tier-group-title {
             font-size: 1rem;
@@ -1002,6 +1004,8 @@
             const goodPkgs = category.packages.filter(p => p.tier === 'good');
             const betterPkgs = category.packages.filter(p => p.tier === 'better');
             const bestPkgs = category.packages.filter(p => p.tier === 'best');
+            const premiumPkgs = category.packages.filter(p => p.tier === 'premium');
+            const valuePkgs = category.packages.filter(p => p.tier === 'value');
             const otherPkgs = category.packages.filter(p => !p.tier);
 
             document.getElementById('categoryContent').innerHTML = `
@@ -1051,9 +1055,33 @@
                     </div>
                     ` : ''}
 
+                    ${premiumPkgs.length > 0 ? `
+                    <div class="tier-group">
+                        <div class="tier-group-header">
+                            <span class="tier-group-badge premium">Premium</span>
+                            <span class="tier-group-title">Top-of-the-line luxury options</span>
+                        </div>
+                        <div class="packages-grid">
+                            ${premiumPkgs.map(pkg => renderPackageCard(pkg)).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    ${valuePkgs.length > 0 ? `
+                    <div class="tier-group">
+                        <div class="tier-group-header">
+                            <span class="tier-group-badge value">Value</span>
+                            <span class="tier-group-title">Budget-friendly options</span>
+                        </div>
+                        <div class="packages-grid">
+                            ${valuePkgs.map(pkg => renderPackageCard(pkg)).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
                     ${otherPkgs.length > 0 ? `
                     <div class="tier-group">
-                        ${(goodPkgs.length > 0 || betterPkgs.length > 0 || bestPkgs.length > 0) ? `
+                        ${(goodPkgs.length > 0 || betterPkgs.length > 0 || bestPkgs.length > 0 || premiumPkgs.length > 0 || valuePkgs.length > 0) ? `
                         <div class="tier-group-header">
                             <span class="tier-group-title">Additional Options</span>
                         </div>

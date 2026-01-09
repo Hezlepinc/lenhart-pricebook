@@ -220,16 +220,63 @@
         }
 
         .package-row {
-            display: grid;
-            grid-template-columns: 1fr 100px 80px 150px 150px 100px;
-            gap: 0.5rem;
             padding: 0.75rem 1rem;
             border-bottom: 1px solid #eee;
-            align-items: center;
         }
 
         .package-row:hover {
             background: #f9f9f9;
+        }
+
+        .package-row-main {
+            display: grid;
+            grid-template-columns: 1fr 100px 150px 150px 120px;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .package-upsells {
+            margin-top: 0.5rem;
+            padding-left: 1rem;
+        }
+
+        .package-upsells:empty {
+            display: none;
+        }
+
+        .package-upsells-label {
+            font-size: 0.6875rem;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .upsell-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 0.375rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .upsell-tag-remove {
+            background: none;
+            border: none;
+            color: #0369a1;
+            cursor: pointer;
+            font-size: 0.875rem;
+            line-height: 1;
+            padding: 0;
+            margin-left: 0.25rem;
+        }
+
+        .upsell-tag-remove:hover {
+            color: #dc2626;
         }
 
         .package-row .name {
@@ -276,6 +323,16 @@
             border-color: var(--best);
         }
 
+        .tier-select.premium {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .tier-select.value {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+
         .upsell-select {
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
@@ -312,6 +369,16 @@
 
         .tier-badge.best {
             background: var(--best);
+            color: white;
+        }
+
+        .tier-badge.premium {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .tier-badge.value {
+            background: #22c55e;
             color: white;
         }
 
@@ -456,11 +523,13 @@
                 <option value="">Change Category...</option>
             </select>
             <select id="bulkTier">
-                <option value="">Set Tier...</option>
+                <option value="">Set Group...</option>
                 <option value="good">Good</option>
                 <option value="better">Better</option>
                 <option value="best">Best</option>
-                <option value="">Clear Tier</option>
+                <option value="premium">Premium</option>
+                <option value="value">Value</option>
+                <option value="">Clear Group</option>
             </select>
             <button class="btn btn-primary" onclick="applyBulkActions()">Apply to Visible</button>
         </div>
@@ -471,11 +540,13 @@
                 <option value="">All Categories</option>
             </select>
             <select id="tierFilter">
-                <option value="">All Tiers</option>
-                <option value="none">No Tier Assigned</option>
+                <option value="">All Groups</option>
+                <option value="none">No Group Assigned</option>
                 <option value="good">Good</option>
                 <option value="better">Better</option>
                 <option value="best">Best</option>
+                <option value="premium">Premium</option>
+                <option value="value">Value</option>
             </select>
         </div>
 
@@ -751,9 +822,9 @@
                 section.className = 'category-section';
                 section.dataset.category = cat.name;
 
-                const tierCounts = { good: 0, better: 0, best: 0 };
+                const tierCounts = { good: 0, better: 0, best: 0, premium: 0, value: 0 };
                 cat.packages.forEach(pkg => {
-                    if (pkg.tier) tierCounts[pkg.tier]++;
+                    if (pkg.tier && tierCounts.hasOwnProperty(pkg.tier)) tierCounts[pkg.tier]++;
                 });
 
                 section.innerHTML = `
@@ -763,6 +834,8 @@
                             ${tierCounts.good ? `<span class="tier-badge good">${tierCounts.good} Good</span>` : ''}
                             ${tierCounts.better ? `<span class="tier-badge better">${tierCounts.better} Better</span>` : ''}
                             ${tierCounts.best ? `<span class="tier-badge best">${tierCounts.best} Best</span>` : ''}
+                            ${tierCounts.premium ? `<span class="tier-badge premium">${tierCounts.premium} Premium</span>` : ''}
+                            ${tierCounts.value ? `<span class="tier-badge value">${tierCounts.value} Value</span>` : ''}
                         </div>
                     </div>
                     <div class="category-packages" id="cat-${catIndex}">
@@ -777,28 +850,51 @@
         function renderPackageRow(pkg, catIndex, pkgIndex) {
             const tierClass = pkg.tier ? pkg.tier : '';
             const allPackageOptions = getAllPackageOptions(pkg.id);
+            const upsells = pkg.upsellTo || [];
+
+            // Build upsell tags
+            let upsellTags = '';
+            if (upsells.length > 0) {
+                const upsellNames = upsells.map(id => {
+                    const found = findPackage(id);
+                    return found ? `<span class="upsell-tag">${found.displayName} <button class="upsell-tag-remove" onclick="removeUpsell('${pkg.id}', '${id}')">&times;</button></span>` : '';
+                }).filter(Boolean).join('');
+
+                if (upsellNames) {
+                    upsellTags = `
+                        <div class="package-upsells">
+                            <div class="package-upsells-label">Upsells to:</div>
+                            ${upsellNames}
+                        </div>
+                    `;
+                }
+            }
 
             return `
                 <div class="package-row" data-id="${pkg.id}" data-tier="${pkg.tier || ''}">
-                    <div class="name">
-                        ${pkg.displayName}
-                        <small>${pkg.name}</small>
+                    <div class="package-row-main">
+                        <div class="name">
+                            ${pkg.displayName}
+                            <small>${pkg.name}</small>
+                        </div>
+                        <div class="price">$${pkg.price.toLocaleString()}</div>
+                        <select class="tier-select ${tierClass}" onchange="setTier('${pkg.id}', this.value)">
+                            <option value="">No Group</option>
+                            <option value="good" ${pkg.tier === 'good' ? 'selected' : ''}>Good</option>
+                            <option value="better" ${pkg.tier === 'better' ? 'selected' : ''}>Better</option>
+                            <option value="best" ${pkg.tier === 'best' ? 'selected' : ''}>Best</option>
+                            <option value="premium" ${pkg.tier === 'premium' ? 'selected' : ''}>Premium</option>
+                            <option value="value" ${pkg.tier === 'value' ? 'selected' : ''}>Value</option>
+                        </select>
+                        <select class="upsell-select" onchange="setUpsell('${pkg.id}', this.value); this.value='';" title="Upsell to...">
+                            <option value="">Add upsell...</option>
+                            ${allPackageOptions}
+                        </select>
+                        <select class="category-select" onchange="setCategory('${pkg.id}', this.value)">
+                            ${allCategories.map(cat => `<option value="${cat}" ${cat === pkg.category ? 'selected' : ''}>${cat}</option>`).join('')}
+                        </select>
                     </div>
-                    <div class="price">$${pkg.price.toLocaleString()}</div>
-                    <div class="hours">${pkg.laborHours}h</div>
-                    <select class="tier-select ${tierClass}" onchange="setTier('${pkg.id}', this.value)">
-                        <option value="">No Tier</option>
-                        <option value="good" ${pkg.tier === 'good' ? 'selected' : ''}>Good</option>
-                        <option value="better" ${pkg.tier === 'better' ? 'selected' : ''}>Better</option>
-                        <option value="best" ${pkg.tier === 'best' ? 'selected' : ''}>Best</option>
-                    </select>
-                    <select class="upsell-select" onchange="setUpsell('${pkg.id}', this.value)" title="Upsell to...">
-                        <option value="">Add upsell...</option>
-                        ${allPackageOptions}
-                    </select>
-                    <select class="category-select" onchange="setCategory('${pkg.id}', this.value)">
-                        ${allCategories.map(cat => `<option value="${cat}" ${cat === pkg.category ? 'selected' : ''}>${cat}</option>`).join('')}
-                    </select>
+                    ${upsellTags}
                 </div>
             `;
         }
@@ -843,6 +939,16 @@
                     saveToStorage();
                     showToast('Upsell added!', true);
                 }
+            }
+        }
+
+        function removeUpsell(packageId, upsellId) {
+            const pkg = findPackage(packageId);
+            if (pkg && pkg.upsellTo) {
+                pkg.upsellTo = pkg.upsellTo.filter(id => id !== upsellId);
+                renderData();
+                saveToStorage();
+                showToast('Upsell removed', true);
             }
         }
 
