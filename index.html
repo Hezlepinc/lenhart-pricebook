@@ -575,6 +575,55 @@
         .detail-add-btn:hover { background: var(--blue-light); }
         .detail-add-btn.in-cart { background: var(--good); }
 
+        .detail-upsells {
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .detail-upsells:empty { display: none; }
+
+        .detail-upsells-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+
+        .upsell-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upsell-item:hover { background: #f0f0f0; }
+
+        .upsell-item-info { flex: 1; }
+        .upsell-item-name { font-weight: 500; font-size: 0.8125rem; }
+        .upsell-item-price { color: var(--gold); font-weight: 600; font-size: 0.875rem; }
+
+        .upsell-item-add {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid var(--blue);
+            background: transparent;
+            color: var(--blue);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upsell-item-add:hover { background: var(--blue); color: white; }
+
         /* Customer Quote Modal */
         .quote-modal {
             position: fixed;
@@ -843,6 +892,7 @@
                 </div>
                 <div class="detail-price" id="detailPrice"></div>
                 <button class="detail-add-btn" id="detailAddBtn" onclick="toggleCartFromDetail()">Add to Quote</button>
+                <div class="detail-upsells" id="detailUpsells"></div>
             </div>
         </div>
     </div>
@@ -1104,6 +1154,37 @@
             const addBtn = document.getElementById('detailAddBtn');
             addBtn.textContent = inQuote ? '✓ Added to Quote' : 'Add to Quote';
             addBtn.classList.toggle('in-cart', inQuote);
+
+            // Render upsells if available
+            const upsellsEl = document.getElementById('detailUpsells');
+            if (pkg.upsells && pkg.upsells.length > 0) {
+                const upsellPkgs = pkg.upsells.map(id => {
+                    for (const cat of pricebookData.categories) {
+                        const found = cat.packages.find(p => p.id === id);
+                        if (found) return found;
+                    }
+                    return null;
+                }).filter(Boolean);
+
+                if (upsellPkgs.length > 0) {
+                    upsellsEl.innerHTML = `
+                        <div class="detail-upsells-title">Consider upgrading to:</div>
+                        ${upsellPkgs.map(up => `
+                            <div class="upsell-item" onclick="openDetailModal('${up.id}')">
+                                <div class="upsell-item-info">
+                                    <div class="upsell-item-name">${up.displayName}</div>
+                                    <div class="upsell-item-price">$${up.price.toLocaleString()}</div>
+                                </div>
+                                <button class="upsell-item-add" onclick="event.stopPropagation(); toggleQuote('${up.id}')">+</button>
+                            </div>
+                        `).join('')}
+                    `;
+                } else {
+                    upsellsEl.innerHTML = '';
+                }
+            } else {
+                upsellsEl.innerHTML = '';
+            }
 
             document.getElementById('detailModal').classList.add('open');
         }
