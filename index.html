@@ -836,10 +836,6 @@
                 <div class="detail-description" id="detailDesc"></div>
                 <div class="detail-meta">
                     <div class="detail-meta-item">
-                        <div class="detail-meta-label">Labor Hours</div>
-                        <div class="detail-meta-value" id="detailHours"></div>
-                    </div>
-                    <div class="detail-meta-item">
                         <div class="detail-meta-label">Category</div>
                         <div class="detail-meta-value" id="detailCategory"></div>
                     </div>
@@ -1070,7 +1066,6 @@
             document.getElementById('detailName').textContent = pkg.displayName;
             document.getElementById('detailId').textContent = pkg.name;
             document.getElementById('detailDesc').textContent = pkg.description || 'Professional electrical service by Lenhart Electric.';
-            document.getElementById('detailHours').textContent = pkg.laborHours + 'h';
             document.getElementById('detailCategory').textContent = categoryName;
             document.getElementById('detailPrice').textContent = '$' + pkg.price.toLocaleString();
 
@@ -1149,7 +1144,6 @@
                         </div>
                         <div class="quote-item-info">
                             <div class="quote-item-name">${item.displayName}</div>
-                            <div class="quote-item-desc">${item.laborHours}h labor</div>
                         </div>
                         <div class="quote-item-price">$${item.price.toLocaleString()}</div>
                         <button class="quote-item-remove" onclick="toggleQuote('${item.id}')">&times;</button>
