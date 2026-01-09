@@ -156,44 +156,100 @@
 
         /* Hero Section - Lifestyle Image */
         .category-hero {
-            position: relative;
-            height: 200px;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             background: linear-gradient(135deg, var(--gray) 0%, var(--gray-dark) 100%);
         }
 
-        .category-hero img {
+        .category-hero-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background: #e0e0e0;
+        }
+
+        .category-hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .category-hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.1) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 1.5rem;
+        .category-hero-info {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--gray) 0%, var(--gray-dark) 100%);
         }
 
         .category-hero h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
         }
 
         .category-hero .starting-at {
-            font-size: 1.125rem;
+            font-size: 1rem;
             color: rgba(255,255,255,0.9);
         }
 
         .category-hero .starting-at strong {
             color: var(--gold);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* Desktop: Side-by-side layout */
+        @media (min-width: 768px) {
+            .category-hero {
+                flex-direction: row;
+                height: 220px;
+            }
+
+            .category-hero-image {
+                width: 55%;
+                height: 100%;
+            }
+
+            .category-hero-info {
+                width: 45%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 2rem;
+            }
+
+            .category-hero h1 {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .category-hero .starting-at {
+                font-size: 1.125rem;
+            }
+
+            .category-hero .starting-at strong {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .category-hero {
+                height: 260px;
+            }
+
+            .category-hero-image {
+                width: 60%;
+            }
+
+            .category-hero-info {
+                width: 40%;
+            }
+
+            .category-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .category-hero .starting-at strong {
+                font-size: 2rem;
+            }
         }
 
         /* Content Section */
@@ -626,14 +682,11 @@
         }
 
         @media (min-width: 600px) {
-            .category-hero { height: 250px; }
             .package-image { height: 140px; }
         }
 
         @media (min-width: 768px) {
             .packages-grid { grid-template-columns: repeat(3, 1fr); }
-            .category-hero { height: 300px; }
-            .category-hero h1 { font-size: 2.5rem; }
             .cart-modal-content {
                 border-radius: var(--radius);
                 margin: auto;
@@ -868,8 +921,10 @@
 
             return `
                 <div class="category-hero">
-                    <img src="${heroImage}" alt="${category.name}" onerror="this.style.display='none'">
-                    <div class="category-hero-overlay">
+                    <div class="category-hero-image">
+                        <img src="${heroImage}" alt="${category.name}" onerror="this.parentElement.style.background='linear-gradient(135deg, #6d7b8a 0%, #5a6873 100%)'">
+                    </div>
+                    <div class="category-hero-info">
                         <h1>${category.name}</h1>
                         <div class="starting-at">Starting at <strong>$${category.startingAt.toLocaleString()}</strong></div>
                     </div>

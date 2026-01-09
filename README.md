@@ -102,11 +102,15 @@ The app supports lifestyle/hero images for each category. To add images:
    - `whole-home-rewire.jpg`
 
 2. Recommended image specs:
-   - **Size**: 1200x600px or similar 2:1 aspect ratio
-   - **Format**: JPG (optimized for web)
+   - **Size**: 800 x 500px (or similar 1.6:1 aspect ratio)
+   - **Format**: JPG (optimized for web, ~50-150KB each)
    - **Style**: Lifestyle photos showing the service in a home setting
 
-3. If an image is missing, the app shows a gradient background - no errors.
+3. Layout behavior:
+   - **Mobile/Tablet**: Image on top, title and price below
+   - **Desktop**: Image on left (60%), title and price on right (40%)
+
+4. If an image is missing, the app shows a gradient background - no errors.
 
 ## Adding Package Images
 
