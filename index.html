@@ -1357,15 +1357,31 @@
 
             try {
                 const savedData = JSON.parse(saved);
-                const savedPackages = new Map();
 
+                // Build map of saved packages
+                const savedPackages = new Map();
                 savedData.categories?.forEach(cat => {
                     cat.packages?.forEach(pkg => {
                         savedPackages.set(pkg.id, pkg);
                     });
                 });
 
+                // Build map of saved categories for hero settings
+                const savedCategories = new Map();
+                savedData.categories?.forEach(cat => {
+                    savedCategories.set(cat.name, cat);
+                });
+
                 pricebookData.categories.forEach(cat => {
+                    // Merge category-level settings (hero image, position, starting at override)
+                    const savedCat = savedCategories.get(cat.name);
+                    if (savedCat) {
+                        if (savedCat.heroImage) cat.heroImage = savedCat.heroImage;
+                        if (savedCat.heroImagePosition) cat.heroImagePosition = savedCat.heroImagePosition;
+                        if (savedCat.startingAtOverride) cat.startingAtOverride = savedCat.startingAtOverride;
+                    }
+
+                    // Merge package-level settings
                     cat.packages.forEach(pkg => {
                         const savedPkg = savedPackages.get(pkg.id);
                         if (savedPkg) {
@@ -1428,11 +1444,43 @@
             'Recessed Lighting': 'images/heroes/Living-recessed-lights.webp'
         };
 
+        // Migrate "Other Services" to "Uncategorized"
+        function migrateOtherServicesToUncategorized() {
+            if (!pricebookData) return;
+
+            const otherServicesIdx = pricebookData.categories.findIndex(c => c.name === 'Other Services');
+            if (otherServicesIdx === -1) return;
+
+            const otherServices = pricebookData.categories[otherServicesIdx];
+
+            // Find or create Uncategorized
+            let uncategorized = pricebookData.categories.find(c => c.name === 'Uncategorized');
+            if (!uncategorized) {
+                uncategorized = { name: 'Uncategorized', packages: [], startingAt: Infinity };
+                pricebookData.categories.push(uncategorized);
+            }
+
+            // Move all packages from Other Services to Uncategorized
+            otherServices.packages.forEach(pkg => {
+                pkg.category = 'Uncategorized';
+                uncategorized.packages.push(pkg);
+                if (pkg.price < uncategorized.startingAt) {
+                    uncategorized.startingAt = pkg.price;
+                }
+            });
+
+            // Remove Other Services category
+            pricebookData.categories.splice(otherServicesIdx, 1);
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 const response = await fetch('data/pricebook.json');
                 pricebookData = await response.json();
+
+                // Migrate "Other Services" to "Uncategorized" first
+                migrateOtherServicesToUncategorized();
 
                 // Merge saved tier/upsell data from admin panel
                 mergeSavedData();
@@ -1490,15 +1538,17 @@
             if (!category) return;
 
             const heroImage = category.heroImage || categoryHeroImages[name] || '';
+            const heroPosition = category.heroImagePosition || '50% 50%';
+            const displayPrice = category.startingAtOverride || category.startingAt;
 
             document.getElementById('categoryContent').innerHTML = `
                 <div class="category-hero">
                     <div class="category-hero-image">
-                        <img src="${heroImage}" alt="${name}" onerror="this.style.display='none'">
+                        <img src="${heroImage}" alt="${name}" style="object-position: ${heroPosition}" onerror="this.style.display='none'">
                     </div>
                     <div class="category-hero-info">
                         <h1>${name}</h1>
-                        <div class="starting-at">Starting at <strong>$${category.startingAt.toLocaleString()}</strong></div>
+                        <div class="starting-at">Starting at <strong>$${displayPrice.toLocaleString()}</strong></div>
                     </div>
                 </div>
                 <div class="category-content">

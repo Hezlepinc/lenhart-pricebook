@@ -199,6 +199,25 @@
             background: #5a6873;
         }
 
+        .category-section.uncategorized .category-header {
+            background: linear-gradient(135deg, #78716c 0%, #57534e 100%);
+            border-left: 4px solid #f59e0b;
+        }
+
+        .category-section.uncategorized .category-header:hover {
+            background: linear-gradient(135deg, #57534e 0%, #44403c 100%);
+        }
+
+        .uncategorized-badge {
+            background: #f59e0b;
+            color: #1c1917;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
         .category-header h2 {
             font-size: 1rem;
             font-weight: 600;
@@ -226,6 +245,7 @@
             padding: 0.75rem 1rem;
             background: #f9f9f9;
             border-bottom: 2px solid #eee;
+            flex-wrap: wrap;
         }
 
         .category-hero-setting label {
@@ -236,11 +256,25 @@
         }
 
         .category-hero-setting input {
-            flex: 1;
             padding: 0.375rem 0.5rem;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 0.75rem;
+        }
+
+        .category-hero-setting input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .category-hero-setting input[type="number"] {
+            width: 100px;
+        }
+
+        .hero-setting-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .package-row {
@@ -548,6 +582,108 @@
                 padding: 0.25rem 0;
             }
         }
+
+        /* Image Position Adjuster */
+        .position-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 1rem;
+        }
+
+        .position-modal.open {
+            display: flex;
+        }
+
+        .position-modal-header {
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .position-modal-header h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .position-modal-header p {
+            opacity: 0.8;
+            font-size: 0.875rem;
+        }
+
+        .position-frame {
+            width: 100%;
+            max-width: 600px;
+            height: 250px;
+            border: 3px solid var(--gold);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+            background: #333;
+        }
+
+        .position-frame:active {
+            cursor: grabbing;
+        }
+
+        .position-frame img {
+            position: absolute;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .position-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .position-controls button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .position-save {
+            background: var(--good);
+            color: white;
+        }
+
+        .position-cancel {
+            background: #666;
+            color: white;
+        }
+
+        .position-reset {
+            background: var(--blue);
+            color: white;
+        }
+
+        .adjust-btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.6875rem;
+            cursor: pointer;
+            background: var(--gold);
+            color: white;
+            margin-left: 0.5rem;
+        }
+
+        .adjust-btn:hover {
+            background: #b8943f;
+        }
     </style>
 </head>
 <body>
@@ -555,7 +691,7 @@
         <h1>Lenhart Price Book Admin</h1>
         <div class="header-actions">
             <button class="btn btn-outline" onclick="loadFromStorage()">Load Saved</button>
-            <button class="btn btn-outline" onclick="saveToStorage()">Save Progress</button>
+            <button class="btn btn-outline" onclick="saveToStorage(false)">Save Progress</button>
             <button class="btn btn-success" onclick="exportJSON()">Export JSON</button>
         </div>
     </header>
@@ -629,10 +765,27 @@
 
     <div class="toast" id="toast"></div>
 
+    <!-- Position Adjuster Modal -->
+    <div class="position-modal" id="positionModal">
+        <div class="position-modal-header">
+            <h3>Adjust Hero Image Position</h3>
+            <p id="positionCategoryName">Drag the image to position it</p>
+        </div>
+        <div class="position-frame" id="positionFrame">
+            <img id="positionImage" src="" alt="Hero image">
+        </div>
+        <div class="position-controls">
+            <button class="position-reset" onclick="resetImagePosition()">Reset</button>
+            <button class="position-cancel" onclick="closePositionAdjuster()">Cancel</button>
+            <button class="position-save" onclick="saveImagePosition()">Save Position</button>
+        </div>
+    </div>
+
     <script>
         // State
         let pricebookData = null;
         let allCategories = [];
+        let openCategories = new Set(); // Track which categories are expanded
 
         // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
@@ -641,10 +794,23 @@
                 const response = await fetch('data/pricebook.json');
                 if (response.ok) {
                     pricebookData = await response.json();
+
+                    // Migrate "Other Services" to "Uncategorized" first
+                    migrateOtherServicesToUncategorized();
+
                     // Also check localStorage for any saved changes
                     const saved = localStorage.getItem('pricebook-admin');
                     if (saved) {
                         const savedData = JSON.parse(saved);
+                        // Migrate old localStorage data too
+                        if (savedData.categories) {
+                            const otherIdx = savedData.categories.findIndex(c => c.name === 'Other Services');
+                            if (otherIdx !== -1) {
+                                // Rename to Uncategorized in saved data
+                                savedData.categories[otherIdx].name = 'Uncategorized';
+                                savedData.categories[otherIdx].packages.forEach(p => p.category = 'Uncategorized');
+                            }
+                        }
                         // Merge saved tier/upsell data
                         mergeSavedData(savedData);
                     }
@@ -668,7 +834,21 @@
                 });
             });
 
+            // Also copy over category-level settings
+            const savedCategories = new Map();
+            saved.categories?.forEach(cat => {
+                savedCategories.set(cat.name, cat);
+            });
+
             pricebookData.categories.forEach(cat => {
+                // Merge category-level settings
+                const savedCat = savedCategories.get(cat.name);
+                if (savedCat) {
+                    if (savedCat.heroImage) cat.heroImage = savedCat.heroImage;
+                    if (savedCat.heroImagePosition) cat.heroImagePosition = savedCat.heroImagePosition;
+                    if (savedCat.startingAtOverride) cat.startingAtOverride = savedCat.startingAtOverride;
+                }
+
                 cat.packages.forEach(pkg => {
                     const savedPkg = savedPackages.get(pkg.id);
                     if (savedPkg) {
@@ -680,6 +860,41 @@
                     }
                 });
             });
+
+            // Migrate "Other Services" to "Uncategorized"
+            migrateOtherServicesToUncategorized();
+        }
+
+        // Migrate any "Other Services" packages to "Uncategorized"
+        function migrateOtherServicesToUncategorized() {
+            if (!pricebookData) return;
+
+            const otherServicesIdx = pricebookData.categories.findIndex(c => c.name === 'Other Services');
+            if (otherServicesIdx === -1) return;
+
+            const otherServices = pricebookData.categories[otherServicesIdx];
+
+            // Find or create Uncategorized
+            let uncategorized = pricebookData.categories.find(c => c.name === 'Uncategorized');
+            if (!uncategorized) {
+                uncategorized = { name: 'Uncategorized', packages: [], startingAt: Infinity };
+                pricebookData.categories.push(uncategorized);
+            }
+
+            // Move all packages from Other Services to Uncategorized
+            otherServices.packages.forEach(pkg => {
+                pkg.category = 'Uncategorized';
+                uncategorized.packages.push(pkg);
+                if (pkg.price < uncategorized.startingAt) {
+                    uncategorized.startingAt = pkg.price;
+                }
+            });
+
+            // Remove Other Services category
+            pricebookData.categories.splice(otherServicesIdx, 1);
+
+            // Sort categories
+            pricebookData.categories.sort((a, b) => a.name.localeCompare(b.name));
         }
 
         function setupFileUpload() {
@@ -844,7 +1059,7 @@
             for (const [regex, category] of patterns) {
                 if (regex.test(name)) return category;
             }
-            return 'Other Services';
+            return 'Uncategorized';
         }
 
         function setupFilters() {
@@ -887,10 +1102,12 @@
             bulkCategory.innerHTML = '<option value="">Change Category...</option>';
 
             allCategories.forEach(cat => {
+                // Skip Uncategorized here - we'll add it specially at the end
+                if (cat === 'Uncategorized') return;
                 categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`;
                 bulkCategory.innerHTML += `<option value="${cat}">${cat}</option>`;
             });
-            // Add Uncategorized option
+            // Add Uncategorized option with special icon
             categoryFilter.innerHTML += `<option value="Uncategorized">⊘ Uncategorized</option>`;
             bulkCategory.innerHTML += `<option value="Uncategorized">⊘ Uncategorized</option>`;
 
@@ -900,7 +1117,8 @@
 
             pricebookData.categories.forEach((cat, catIndex) => {
                 const section = document.createElement('div');
-                section.className = 'category-section';
+                const isUncategorized = cat.name === 'Uncategorized';
+                section.className = 'category-section' + (isUncategorized ? ' uncategorized' : '');
                 section.dataset.category = cat.name;
 
                 const tierCounts = { good: 0, better: 0, best: 0, premium: 0, value: 0 };
@@ -908,9 +1126,12 @@
                     if (pkg.tier && tierCounts.hasOwnProperty(pkg.tier)) tierCounts[pkg.tier]++;
                 });
 
+                const displayPrice = cat.startingAtOverride || cat.startingAt;
+                const isOpen = openCategories.has(cat.name);
+                const uncatBadge = isUncategorized ? '<span class="uncategorized-badge">HIDDEN FROM PRICEBOOK</span>' : '';
                 section.innerHTML = `
                     <div class="category-header" onclick="toggleCategory(${catIndex})">
-                        <h2>${cat.name} <span class="badge">${cat.packages.length} packages</span></h2>
+                        <h2>${cat.name} <span class="badge">${cat.packages.length} packages</span>${uncatBadge}</h2>
                         <div>
                             ${tierCounts.good ? `<span class="tier-badge good">${tierCounts.good} Good</span>` : ''}
                             ${tierCounts.better ? `<span class="tier-badge better">${tierCounts.better} Better</span>` : ''}
@@ -920,13 +1141,24 @@
                             ${cat.heroImage ? `<span class="tier-badge" style="background:#666;">📷</span>` : ''}
                         </div>
                     </div>
-                    <div class="category-packages" id="cat-${catIndex}">
+                    <div class="category-packages ${isOpen ? 'open' : ''}" id="cat-${catIndex}">
                         <div class="category-hero-setting" onclick="event.stopPropagation()">
-                            <label>Hero Image URL:</label>
-                            <input type="text" placeholder="Paste hero image URL for ${cat.name}"
-                                   value="${cat.heroImage || ''}"
-                                   onchange="setCategoryHeroImage('${cat.name}', this.value)">
-                            ${cat.heroImage ? `<img src="${cat.heroImage}" style="height:40px;border-radius:4px;" onerror="this.style.display='none'">` : ''}
+                            <div class="hero-setting-group">
+                                <label>Hero Image:</label>
+                                <input type="text" placeholder="Paste hero image URL"
+                                       value="${cat.heroImage || ''}"
+                                       onchange="setCategoryHeroImage('${cat.name}', this.value)">
+                                ${cat.heroImage ? `<img src="${cat.heroImage}" style="height:40px;border-radius:4px;" onerror="this.style.display='none'">` : ''}
+                                ${cat.heroImage ? `<button class="adjust-btn" onclick="openPositionAdjuster('${cat.name}')">Adjust</button>` : ''}
+                            </div>
+                            <div class="hero-setting-group">
+                                <label>Starting At: $</label>
+                                <input type="number" placeholder="${Math.round(cat.startingAt)}"
+                                       value="${cat.startingAtOverride || ''}"
+                                       onchange="setStartingAtOverride('${cat.name}', this.value)"
+                                       title="Leave blank to use auto-calculated: $${Math.round(cat.startingAt)}">
+                                ${cat.startingAtOverride ? `<span style="font-size:0.6875rem;color:#666;">(auto: $${Math.round(cat.startingAt)})</span>` : ''}
+                            </div>
                         </div>
                         ${cat.packages.map((pkg, pkgIndex) => renderPackageRow(pkg, catIndex, pkgIndex)).join('')}
                     </div>
@@ -1018,15 +1250,33 @@
 
         function toggleCategory(index) {
             const el = document.getElementById(`cat-${index}`);
-            el.classList.toggle('open');
+            const isOpen = el.classList.toggle('open');
+            // Track open state by category name
+            const catName = pricebookData.categories[index]?.name;
+            if (catName) {
+                if (isOpen) {
+                    openCategories.add(catName);
+                } else {
+                    openCategories.delete(catName);
+                }
+            }
         }
 
         function setTier(packageId, tier) {
             const pkg = findPackage(packageId);
             if (pkg) {
                 pkg.tier = tier || null;
-                renderData();
+                // Update just the select element's class
+                const row = document.querySelector(`.package-row[data-id="${packageId}"]`);
+                if (row) {
+                    row.dataset.tier = tier || '';
+                    const select = row.querySelector('.tier-select');
+                    if (select) {
+                        select.className = 'tier-select ' + (tier || '');
+                    }
+                }
                 saveToStorage();
+                updateStats();
             }
         }
 
@@ -1038,8 +1288,26 @@
                 if (!pkg.upsellTo) pkg.upsellTo = [];
                 if (!pkg.upsellTo.includes(upsellId)) {
                     pkg.upsellTo.push(upsellId);
-                    renderData();
+                    // Add upsell tag to the row
+                    const row = document.querySelector(`.package-row[data-id="${packageId}"]`);
+                    if (row) {
+                        let upsellsDiv = row.querySelector('.package-upsells');
+                        if (!upsellsDiv) {
+                            upsellsDiv = document.createElement('div');
+                            upsellsDiv.className = 'package-upsells';
+                            upsellsDiv.innerHTML = '<div class="package-upsells-label">Upsells to:</div>';
+                            row.querySelector('.package-row-main').insertAdjacentElement('afterend', upsellsDiv);
+                        }
+                        const found = findPackage(upsellId);
+                        if (found) {
+                            const tag = document.createElement('span');
+                            tag.className = 'upsell-tag';
+                            tag.innerHTML = `${found.displayName} <button class="upsell-tag-remove" onclick="removeUpsell('${packageId}', '${upsellId}')">&times;</button>`;
+                            upsellsDiv.appendChild(tag);
+                        }
+                    }
                     saveToStorage();
+                    updateStats();
                     showToast('Upsell added!', true);
                 }
             }
@@ -1049,8 +1317,23 @@
             const pkg = findPackage(packageId);
             if (pkg && pkg.upsellTo) {
                 pkg.upsellTo = pkg.upsellTo.filter(id => id !== upsellId);
-                renderData();
+                // Remove the tag from DOM
+                const row = document.querySelector(`.package-row[data-id="${packageId}"]`);
+                if (row) {
+                    const tags = row.querySelectorAll('.upsell-tag');
+                    tags.forEach(tag => {
+                        if (tag.querySelector(`button[onclick*="${upsellId}"]`)) {
+                            tag.remove();
+                        }
+                    });
+                    // Remove upsells div if empty
+                    const upsellsDiv = row.querySelector('.package-upsells');
+                    if (upsellsDiv && upsellsDiv.querySelectorAll('.upsell-tag').length === 0) {
+                        upsellsDiv.remove();
+                    }
+                }
                 saveToStorage();
+                updateStats();
                 showToast('Upsell removed', true);
             }
         }
@@ -1059,11 +1342,38 @@
             const pkg = findPackage(packageId);
             if (pkg) {
                 pkg.image = imageUrl.trim() || null;
-                renderData();
-                saveToStorage();
-                if (imageUrl) {
-                    showToast('Image added!', true);
+                // Update just the image preview and remove button
+                const row = document.querySelector(`.package-row[data-id="${packageId}"]`);
+                if (row) {
+                    const imageRow = row.querySelector('.package-image-row');
+                    if (imageRow) {
+                        let preview = imageRow.querySelector('.package-image-preview');
+                        let removeBtn = imageRow.querySelector('.image-btn.remove');
+
+                        if (imageUrl.trim()) {
+                            if (!preview) {
+                                preview = document.createElement('img');
+                                preview.className = 'package-image-preview';
+                                imageRow.insertBefore(preview, imageRow.firstChild);
+                            }
+                            preview.src = imageUrl.trim();
+                            preview.style.display = '';
+
+                            if (!removeBtn) {
+                                removeBtn = document.createElement('button');
+                                removeBtn.className = 'image-btn remove';
+                                removeBtn.textContent = 'Remove';
+                                removeBtn.onclick = () => setPackageImage(packageId, '');
+                                imageRow.appendChild(removeBtn);
+                            }
+                        } else {
+                            if (preview) preview.remove();
+                            if (removeBtn) removeBtn.remove();
+                        }
+                    }
                 }
+                saveToStorage();
+                updateStats();
             }
         }
 
@@ -1071,11 +1381,40 @@
             const cat = pricebookData.categories.find(c => c.name === categoryName);
             if (cat) {
                 cat.heroImage = imageUrl.trim() || null;
-                renderData();
-                saveToStorage();
-                if (imageUrl) {
-                    showToast('Hero image set!', true);
+                // Update just the preview image and adjust button
+                const section = document.querySelector(`.category-section[data-category="${categoryName}"]`);
+                if (section) {
+                    const heroSetting = section.querySelector('.category-hero-setting .hero-setting-group');
+                    if (heroSetting) {
+                        let preview = heroSetting.querySelector('img');
+                        let adjustBtn = heroSetting.querySelector('.adjust-btn');
+
+                        if (imageUrl.trim()) {
+                            if (!preview) {
+                                preview = document.createElement('img');
+                                preview.style.height = '40px';
+                                preview.style.borderRadius = '4px';
+                                preview.onerror = () => preview.style.display = 'none';
+                                heroSetting.appendChild(preview);
+                            }
+                            preview.src = imageUrl.trim();
+                            preview.style.display = '';
+
+                            if (!adjustBtn) {
+                                adjustBtn = document.createElement('button');
+                                adjustBtn.className = 'adjust-btn';
+                                adjustBtn.textContent = 'Adjust';
+                                adjustBtn.onclick = () => openPositionAdjuster(categoryName);
+                                heroSetting.appendChild(adjustBtn);
+                            }
+                        } else {
+                            if (preview) preview.remove();
+                            if (adjustBtn) adjustBtn.remove();
+                        }
+                    }
                 }
+                saveToStorage();
+                updateStats();
             }
         }
 
@@ -1192,9 +1531,11 @@
             }
         }
 
-        function saveToStorage() {
+        function saveToStorage(silent = true) {
             localStorage.setItem('pricebook-admin', JSON.stringify(pricebookData));
-            showToast('Progress saved!', true);
+            if (!silent) {
+                showToast('Progress saved!', true);
+            }
         }
 
         function loadFromStorage() {
@@ -1241,6 +1582,145 @@
             toast.textContent = message;
             toast.className = 'toast show' + (success ? ' success' : '');
             setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Update stats without re-rendering
+        function updateStats() {
+            if (!pricebookData) return;
+
+            let totalPackages = 0;
+            let assignedTiers = 0;
+            let upsellsConfigured = 0;
+            let imagesSet = 0;
+
+            pricebookData.categories.forEach(cat => {
+                if (cat.heroImage) imagesSet++;
+                cat.packages.forEach(pkg => {
+                    totalPackages++;
+                    if (pkg.tier) assignedTiers++;
+                    if (pkg.upsellTo && pkg.upsellTo.length > 0) upsellsConfigured++;
+                    if (pkg.image) imagesSet++;
+                });
+            });
+
+            document.getElementById('totalPackages').textContent = totalPackages;
+            document.getElementById('totalCategories').textContent = pricebookData.categories.length;
+            document.getElementById('assignedTiers').textContent = assignedTiers;
+            document.getElementById('upsellsConfigured').textContent = upsellsConfigured;
+            document.getElementById('imagesSet').textContent = imagesSet;
+        }
+
+        // Starting At Override
+        function setStartingAtOverride(categoryName, value) {
+            const cat = pricebookData.categories.find(c => c.name === categoryName);
+            if (cat) {
+                const numValue = parseFloat(value);
+                cat.startingAtOverride = numValue > 0 ? numValue : null;
+                saveToStorage();
+            }
+        }
+
+        // Position Adjuster State
+        let currentPositionCategory = null;
+        let imagePosition = { x: 50, y: 50 };
+        let isDragging = false;
+        let dragStart = { x: 0, y: 0 };
+
+        function openPositionAdjuster(categoryName) {
+            const cat = pricebookData.categories.find(c => c.name === categoryName);
+            if (!cat || !cat.heroImage) return;
+
+            currentPositionCategory = categoryName;
+            document.getElementById('positionCategoryName').textContent = categoryName;
+            document.getElementById('positionImage').src = cat.heroImage;
+
+            // Load existing position or default to center
+            if (cat.heroImagePosition) {
+                const [x, y] = cat.heroImagePosition.split(' ').map(v => parseFloat(v));
+                imagePosition = { x: x || 50, y: y || 50 };
+            } else {
+                imagePosition = { x: 50, y: 50 };
+            }
+            updateImagePosition();
+
+            document.getElementById('positionModal').classList.add('open');
+            setupDragListeners();
+        }
+
+        function closePositionAdjuster() {
+            document.getElementById('positionModal').classList.remove('open');
+            currentPositionCategory = null;
+            removeDragListeners();
+        }
+
+        function resetImagePosition() {
+            imagePosition = { x: 50, y: 50 };
+            updateImagePosition();
+        }
+
+        function saveImagePosition() {
+            if (!currentPositionCategory) return;
+
+            const cat = pricebookData.categories.find(c => c.name === currentPositionCategory);
+            if (cat) {
+                cat.heroImagePosition = `${imagePosition.x}% ${imagePosition.y}%`;
+                saveToStorage();
+                showToast('Image position saved!', true);
+            }
+            closePositionAdjuster();
+        }
+
+        function updateImagePosition() {
+            const img = document.getElementById('positionImage');
+            img.style.objectPosition = `${imagePosition.x}% ${imagePosition.y}%`;
+            img.style.left = `${50 - imagePosition.x}%`;
+            img.style.top = `${50 - imagePosition.y}%`;
+        }
+
+        function setupDragListeners() {
+            const frame = document.getElementById('positionFrame');
+            frame.addEventListener('mousedown', startDrag);
+            frame.addEventListener('touchstart', startDrag, { passive: false });
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('touchmove', onDrag, { passive: false });
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+        }
+
+        function removeDragListeners() {
+            const frame = document.getElementById('positionFrame');
+            frame.removeEventListener('mousedown', startDrag);
+            frame.removeEventListener('touchstart', startDrag);
+            document.removeEventListener('mousemove', onDrag);
+            document.removeEventListener('touchmove', onDrag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchend', endDrag);
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            const pos = e.touches ? e.touches[0] : e;
+            dragStart = { x: pos.clientX, y: pos.clientY };
+        }
+
+        function onDrag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+
+            const pos = e.touches ? e.touches[0] : e;
+            const deltaX = (pos.clientX - dragStart.x) * 0.3;
+            const deltaY = (pos.clientY - dragStart.y) * 0.3;
+
+            imagePosition.x = Math.max(0, Math.min(100, imagePosition.x - deltaX));
+            imagePosition.y = Math.max(0, Math.min(100, imagePosition.y - deltaY));
+
+            dragStart = { x: pos.clientX, y: pos.clientY };
+            updateImagePosition();
+        }
+
+        function endDrag() {
+            isDragging = false;
         }
     </script>
 </body>

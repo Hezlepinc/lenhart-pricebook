@@ -1143,7 +1143,7 @@
       "icon": "minus"
     },
     {
-      "name": "Other Services",
+      "name": "Uncategorized",
       "startingAt": 1.0,
       "packages": [
         {
@@ -1153,7 +1153,7 @@
           "price": 1.0,
           "laborHours": 0.0,
           "description": "- None -",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1164,7 +1164,7 @@
           "price": 4.04,
           "laborHours": 0.0,
           "description": "1/0 SER Alum Wire",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1175,7 +1175,7 @@
           "price": 18.0,
           "laborHours": 0.5,
           "description": "ADDER GAS PIPE PER FOOT",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1186,7 +1186,7 @@
           "price": 24.0,
           "laborHours": 0.1,
           "description": "TAPE LIGHT PER FT (30OOK)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1197,7 +1197,7 @@
           "price": 24.0,
           "laborHours": 0.1,
           "description": "TAPE LIGHT PER FT (5000K)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1208,7 +1208,7 @@
           "price": 42.0,
           "laborHours": 0.1,
           "description": "REPLACE 4/0 ALUMINUM SER PER FOOT",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1219,7 +1219,7 @@
           "price": 79.0,
           "laborHours": 1.0,
           "description": "Site Mobile Home Assessment",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1230,7 +1230,7 @@
           "price": 90.0,
           "laborHours": 0.5,
           "description": "TAPE LIGHT ADDER CABINET BREAK",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1241,7 +1241,7 @@
           "price": 100.0,
           "laborHours": 1.0,
           "description": "Contractor Site Visit",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1252,7 +1252,7 @@
           "price": 150.0,
           "laborHours": 1.0,
           "description": "Install Ring Doorbell (Customer provided)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1263,7 +1263,7 @@
           "price": 150.0,
           "laborHours": 0.5,
           "description": "AMSFL_LEVEL 1 TROUBLESHOOT (INCLUDES UP TO 30 MIN OF TROUBLESHOOT & REPAIRS, FREE HOME CHECK - MATERIAL NOT INCLUDED)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1274,7 +1274,7 @@
           "price": 150.0,
           "laborHours": 1.0,
           "description": "Site Visit",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1285,7 +1285,7 @@
           "price": 200.0,
           "laborHours": 1.5,
           "description": "INSTALL CABLE OUTLET NEW ON INTERIOR WALL- (Electrician to record RG6 quad shield cable wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1296,7 +1296,7 @@
           "price": 200.0,
           "laborHours": 1.0,
           "description": "GENFL_ADDER LOAD SHED (INCLUDES PSP NEMA 3R LOADSHED DEVICE)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1307,7 +1307,7 @@
           "price": 204.0,
           "laborHours": 1.0,
           "description": "INSTALL PASS THRU FOR CABLES  - One time courtesy pull string option available at install. No additional wires pulled in package. T&M for additional requirements. ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1318,7 +1318,7 @@
           "price": 205.0,
           "laborHours": 0.5,
           "description": "PHOTOCELL POST LIGHT INSTALL-",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1329,7 +1329,7 @@
           "price": 225.0,
           "laborHours": 1.0,
           "description": "INSTALL WALL SCONCE  (No warranrty on owner supplied material. Electrician to record wire at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1340,7 +1340,7 @@
           "price": 225.0,
           "laborHours": 1.0,
           "description": "Installation of Air Cooled Battery",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1351,7 +1351,7 @@
           "price": 235.0,
           "laborHours": 0.5,
           "description": "AMSFL_LEVEL 2 TROUBLESHOOT (INCLUDES UP TO 60 MIN OF TROUBLESHOOT & REPAIRS, FREE HOME CHECK - MATERIAL NOT INCLUDED)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1362,7 +1362,7 @@
           "price": 240.0,
           "laborHours": 1.0,
           "description": "INSTALL DOORBELL REPLACEMENT  \n Trouble Shooting for broken wires is at additional T&M rates.",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1373,7 +1373,7 @@
           "price": 240.0,
           "laborHours": 1.0,
           "description": "SURFACE MOUNT LED 4\" FIXTURE INSTALLED ,WEATHER PROOF (Electrician to record 14-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1384,7 +1384,7 @@
           "price": 250.0,
           "laborHours": 1.0,
           "description": "15A AFCI CIRCUIT QO UP TO 50 FT",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1395,7 +1395,7 @@
           "price": 250.0,
           "laborHours": 0.0,
           "description": "Permit Commercial",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1406,7 +1406,7 @@
           "price": 250.0,
           "laborHours": 0.0,
           "description": "Permit Residential",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1417,7 +1417,7 @@
           "price": 250.0,
           "laborHours": 1.0,
           "description": "ALWAYS A SWEEP TRAVEL FEE 1-2 HR NG",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1428,7 +1428,7 @@
           "price": 295.0,
           "laborHours": 0.5,
           "description": "AMSFL_LEVEL 3 TROUBLESHOOT (INCLUDES UP TO 90 MIN OF TROUBLESHOOT & REPAIRS, FREE HOME CHECK - MATERIAL NOT INCLUDED)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1439,7 +1439,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "LED FIXTURE 2 STRIP INSTALLED (Electrician to record 14-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1450,7 +1450,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "LED FIXTURE 2 LAMP INSTALLED (Electrician to record 14-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1461,7 +1461,7 @@
           "price": 300.0,
           "laborHours": 0.5,
           "description": "POST BLACK INSTALLED",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1472,7 +1472,7 @@
           "price": 300.0,
           "laborHours": 0.5,
           "description": "POST WHITE INSTALLED",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1483,7 +1483,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "POST LIGHT PLASTIC BLACK FIXTURE-",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1494,7 +1494,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "NOT IN USE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1505,7 +1505,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "NOT IN USE 2",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1516,7 +1516,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "Commercial Site Visit",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1527,7 +1527,7 @@
           "price": 300.0,
           "laborHours": 1.0,
           "description": "Emergency Site Visit",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1538,7 +1538,7 @@
           "price": 340.0,
           "laborHours": 1.0,
           "description": "GENFL_LEVEL 2 MAINTENANCE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1549,7 +1549,7 @@
           "price": 350.0,
           "laborHours": 1.25,
           "description": "AMSFL_INSTALL CAMERA SYSTEM 1 CAMERA ADD ON, Hikvision ECI-T24F 4MP Outdoor IR Turret IP Camera 2.8mm Fixed Lens White, MAX of 200 ft from NVR.",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1560,7 +1560,7 @@
           "price": 350.0,
           "laborHours": 2.0,
           "description": "LEVEL 1 LIQUID COOLED GENERATOR DRY INSPECTION ( UP TO 80KW ) ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1571,7 +1571,7 @@
           "price": 360.0,
           "laborHours": 2.0,
           "description": "TAPE LIGHT BASE (REMOTE)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1582,7 +1582,7 @@
           "price": 400.0,
           "laborHours": 1.5,
           "description": "INSTALL ETHERNET LINE  (Electrician to record CAT 6 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1593,7 +1593,7 @@
           "price": 420.0,
           "laborHours": 1.0,
           "description": "POST LIGHT METAL BLACK  FIXTURE-",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1604,7 +1604,7 @@
           "price": 420.0,
           "laborHours": 1.0,
           "description": "POST LIGHT METAL WHITE FIXTURE-",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1615,7 +1615,7 @@
           "price": 425.0,
           "laborHours": 1.0,
           "description": "ALWAYS A SWEEP TRAVEL FEE 2-3 HR NG",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1626,7 +1626,7 @@
           "price": 475.0,
           "laborHours": 1.0,
           "description": "Propane Monitor installed",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1637,7 +1637,7 @@
           "price": 475.0,
           "laborHours": 1.0,
           "description": "GENERAC 7215 CELLULAR MOBILE LINK DEVICE SIGNAL SWAP PROMO",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1648,7 +1648,7 @@
           "price": 480.0,
           "laborHours": 1.5,
           "description": "INSTALL 15A DEDICATED CIRCUIT W/ ARC FAULT/GFI COMBO BREAKER - INCLUDES OUTLET(Electrician to record 14-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1659,7 +1659,7 @@
           "price": 500.0,
           "laborHours": 1.0,
           "description": "AMSFL_INSTALL LUTRON CASETA SMART HUB - OTS (Installed on existing Caseta Smart Switches)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1670,7 +1670,7 @@
           "price": 500.0,
           "laborHours": 1.0,
           "description": "ALWAYS A SWEEP TRAVEL FEE 1-2 HR LP",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1681,7 +1681,7 @@
           "price": 500.0,
           "laborHours": 1.0,
           "description": "ALWAYS A SWEEP TRAVEL FEE 1-2 HR PROPANE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1692,7 +1692,7 @@
           "price": 530.0,
           "laborHours": 2.0,
           "description": "INSTALL DOORBELL CHIME 1 ADDITIONAL LOCATION- TO EXISTING SYSTEM (Electrician to record wire used at no charge to package)Trouble Shooting for broken wires is at additional T & M rates.",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1703,7 +1703,7 @@
           "price": 600.0,
           "laborHours": 2.0,
           "description": "INSTALL 15A DEDICATED CIRCUIT W/ ARC FAULT/GFI COMBO BREAKER - INCLUDES OUTLET(Electrician to record 14-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1714,7 +1714,7 @@
           "price": 600.0,
           "laborHours": 1.5,
           "description": "INSTALL 20A DEDICATED CIRCUIT W/ ARC FAULT/GFI COMBO BREAKER - INCLUDES OUTLET(Electrician to record 12-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1725,7 +1725,7 @@
           "price": 600.0,
           "laborHours": 1.0,
           "description": "AMSFL_INSTALL LUTRON CASETA SMART HUB (Installed on existing Caseta Smart Switches)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1736,7 +1736,7 @@
           "price": 600.0,
           "laborHours": 1.0,
           "description": "Rollback rental ( this is needed to deliver of all liquid cooled generators )",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1747,7 +1747,7 @@
           "price": 600.0,
           "laborHours": 1.0,
           "description": "GENFL_ADDER SOFT STARTER ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1758,7 +1758,7 @@
           "price": 700.0,
           "laborHours": 2.5,
           "description": "INSTALL DOORBELL CHIME 2 ADDITIONAL LOCATION TO EXISTING SYSTEM (Electrician to record 14-2 or 12-2 wire used at no charge to package) Trouble Shooting for broken wires is at additional T&M rates.",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1769,7 +1769,7 @@
           "price": 720.0,
           "laborHours": 2.5,
           "description": "INSTALL 15A DEDICATED CIRCUIT W/ ARC FAULT/GFI COMBO BREAKER - INCLUDES OUTLET(Electrician to record 14-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1780,7 +1780,7 @@
           "price": 720.0,
           "laborHours": 2.0,
           "description": "INSTALL 20A DEDICATED CIRCUIT W/ ARC FAULT/GFI COMBO BREAKER - INCLUDES OUTLET(Electrician to record 12-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1791,7 +1791,7 @@
           "price": 790.0,
           "laborHours": 2.0,
           "description": "AMSFL_INSTALL WP RECEPTICALES ON BIRDCAGE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1802,7 +1802,7 @@
           "price": 840.0,
           "laborHours": 2.0,
           "description": "INSTALL 15A DEDICATED CKT 75-100'",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1813,7 +1813,7 @@
           "price": 840.0,
           "laborHours": 2.5,
           "description": "INSTALL 20A DEDICATED CIRCUIT W/ ARC FAULT/GFI COMBO BREAKER - INCLUDES OUTLET(Electrician to record 12-2 wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1824,7 +1824,7 @@
           "price": 850.0,
           "laborHours": 1.0,
           "description": "ALWAYS A SWEEP TRAVEL FEE 2-3 HR LP",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1835,7 +1835,7 @@
           "price": 900.0,
           "laborHours": 2.0,
           "description": "GENFL_INSTALL 200A ATS W/ LOAD CENTER (USE IF NEEDING A 200A ATS LOAD CENTER IN PLACE OF 200A IN PACKAGE, ADDS ADDITIONAL COST)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1846,7 +1846,7 @@
           "price": 960.0,
           "laborHours": 2.0,
           "description": "INSTALL 20A DEDICATED CKT 75-100'",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1857,7 +1857,7 @@
           "price": 960.0,
           "laborHours": 2.0,
           "description": "INSTALL WIRING GAS W/H 0-25'",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1868,7 +1868,7 @@
           "price": 1080.0,
           "laborHours": 2.0,
           "description": "INSTALL WIRING GAS W/H 25-50'",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1879,7 +1879,7 @@
           "price": 1100.0,
           "laborHours": 6.0,
           "description": "GENFL_STANDARD AIR COOLED MAINTENANCE PACKAGE \n- Year 1 Level 2 Maintenance \n- Year 2 Level 3 Maintenance \n- Year 3 Level 2 Maintenance \n",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1890,7 +1890,7 @@
           "price": 1496.0,
           "laborHours": 5.0,
           "description": "AMSFL_INSTALL CAMERA SYSTEM NVR WITH 4 CAMERAS HIKVISION - EKI-K41T44 max of 200 ft from NVR, MONITOR NOT INCLUDED",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1901,7 +1901,7 @@
           "price": 1500.0,
           "laborHours": 16.0,
           "description": "GENFL_ADDER 150A ATS",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1912,7 +1912,7 @@
           "price": 1500.0,
           "laborHours": 1.0,
           "description": "5,000 lb Telehandler rental ( needed for setting all liquid cooled generators )",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1923,7 +1923,7 @@
           "price": 1500.0,
           "laborHours": 8.0,
           "description": "GENFL_PLUS AIR COOLED MAINTENANCE PACKAGE \n- Year 1 Level 2 Maintenance \n- Year 2 Level 3 Maintenance \n- Year 3 Level 2 Maintenance \n- Year 4 Level 3 Maintenance",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1934,7 +1934,7 @@
           "price": 1700.0,
           "laborHours": 2.0,
           "description": "GENFL_ADDER 200A ATS",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1945,7 +1945,7 @@
           "price": 1800.0,
           "laborHours": 1.0,
           "description": "LP OR NG CONNECTION (SUB-CONTRACTOR CONNECTION UP TO 10FT FROM METER, INCLUDES PERMIT)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1956,7 +1956,7 @@
           "price": 2000.0,
           "laborHours": 2.0,
           "description": "GENFL_ADDER 200A ATS W/ LOAD CENTER",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1967,7 +1967,7 @@
           "price": 2103.5,
           "laborHours": 7.5,
           "description": "AMSFL_INSTALL CAMERA SYSTEM 8CH NVR WITH 6 CAMERAS HIKVISION - EKI-K82T46 max of 200 ft from NVR, MONITOR NOT INCLUDED",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1978,7 +1978,7 @@
           "price": 2200.0,
           "laborHours": 12.0,
           "description": "GENFL_PREMIUM AIR COOLED MAINTENANCE PACKAGE \n- Year 1 Level 2 Maintenance \n- Year 2 Level 3 Maintenance \n- Year 3 Level 2 Maintenance \n- Year 4 Level 3 Maintenance \n(Also includes a Level 1 Maintenance each year) ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -1989,7 +1989,7 @@
           "price": 3226.0,
           "laborHours": 5.0,
           "description": "INSTALL INTERLOCK KIT FOR 30 AMP OWNER SUPPLIED PORTABLE GENERATOR IN A CUTLER HAMMER PANEL UP TO 40' FROM PANEL, ,WITH PREMIUM SURGE,CABLE SURGE,A\\C SURGE WITH SOFT START UNIT AND 1YR ENERGY MANAGMENT PROGRAM Electrician to record wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2000,7 +2000,7 @@
           "price": 3226.0,
           "laborHours": 5.0,
           "description": "INSTALL INTERLOCK KIT FOR 30 AMP OWNER SUPPLIED PORTABLE GENERATOR IN A HOMELINE PANEL UP TO 40' FROM PANEL,WITH PREMIUM SURGE,CABLE SURGE,A\\C SURGE WITH SOFT START AND 1YR ENERGY MANAGMENT PROGRAM (Electrician to record wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2011,7 +2011,7 @@
           "price": 3736.0,
           "laborHours": 6.0,
           "description": "INSTALL INTERLOCK KIT FOR 50 AMP OWNER SUPPLIED PORTABLE GENERATOR IN A HOMELINE PANEL UP TO 40' FROM PANEL ,WITH PREMIUM SURGE,CABLE SURGE,A\\C SURGE WITH SOFT START UNIT AND 1YR ENERGY MANAGMENT PLAN(Electrician to record wire used at no charge to package)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2022,7 +2022,7 @@
           "price": 4000.0,
           "laborHours": 8.0,
           "description": "150-200A SERVICE REJUVINATION - INCLUDES REPLACEMENT OF ALL NON AFCI/GFCI BREAKERS OTHER THAN MAIN SERVICE BREAKER FOR 1 MAIN SERVICE PANEL AND 1 SUB PANEL",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2033,7 +2033,7 @@
           "price": 4006.5,
           "laborHours": 15.0,
           "description": "AMSFL_INSTALL CAMERA SYSTEM 16CH NVR WITH 12 CAMERAS HIKVISION-EKI-K164T412 MAX of 200 ft from NVR, MONITOR NOT INCLUDED",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2044,7 +2044,7 @@
           "price": 4200.0,
           "laborHours": 12.0,
           "description": "REPLACE OVERHEAD SERVICE - INCLUDES ALL 150-200A SERVICE EQUIPMENT (Does not include permit and utility fees)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2055,7 +2055,7 @@
           "price": 4200.0,
           "laborHours": 10.0,
           "description": "REPLACE UNDERGROUND SERVICE - INCLUDES ALL 150-200A SERVICE EQUIPMENT (Does not include permit and utility fees)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2066,7 +2066,7 @@
           "price": 5278.8,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 250 GALLON  \nTHERMOTANE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2077,7 +2077,7 @@
           "price": 5280.0,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 250 GALLON ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2088,7 +2088,7 @@
           "price": 5760.0,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 250 GALLON \nSUPERIOR  ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2099,7 +2099,7 @@
           "price": 6000.0,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND (2) 120G TANKS \nSUPERIOR  ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2110,7 +2110,7 @@
           "price": 6049.64,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 250 GALLON ALWAYS A SWEEP ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2121,7 +2121,7 @@
           "price": 6200.0,
           "laborHours": 0.0,
           "description": "AMSFL_INSTALL 400 AMP(320) SUB) OUTDOOR METER/MAIN, WALLMOUNT -SQUARE D QO  AND DUAL LUG FOR PARALLEL FEEDERS, INCLUDES GROUND BRIDGE AND RODS ECT. INCLUDES MAIN BREAKERS ONLY.",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2132,7 +2132,7 @@
           "price": 6380.0,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 250 GALLON ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2143,7 +2143,7 @@
           "price": 6478.8,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 250 GALLON THERMOTANE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2154,7 +2154,7 @@
           "price": 6545.0,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND (2) 120G TANKS (INCLUDES PERMIT AND 50FT OF LINE AND FINAL CONNECTIONS)",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2165,7 +2165,7 @@
           "price": 6736.8,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 250 GALLON  \nAlways a Sweep ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2176,7 +2176,7 @@
           "price": 6960.0,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 250 GALLON  \nSUPERIOR ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2187,7 +2187,7 @@
           "price": 7150.0,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 500 GALLON ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2198,7 +2198,7 @@
           "price": 7800.0,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 500 GALLON  \nSUPERIOR ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2209,7 +2209,7 @@
           "price": 8030.0,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 500 GALLON ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2220,7 +2220,7 @@
           "price": 8638.8,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 500 GALLON  \nTHERMOTANE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2231,7 +2231,7 @@
           "price": 8760.0,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 500 GALLON SUPERIOR ",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2242,7 +2242,7 @@
           "price": 9262.95,
           "laborHours": 1.0,
           "description": "PROPANE ABOVE GROUND 500 GALLON ALWAYS A SWEEP",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2253,7 +2253,7 @@
           "price": 9718.8,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 500 GALLON  \nTHERMOTANE",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         },
@@ -2264,7 +2264,7 @@
           "price": 10466.11,
           "laborHours": 1.0,
           "description": "PROPANE INGROUND 500 GALLON ALWAYS A SWEEP",
-          "category": "Other Services",
+          "category": "Uncategorized",
           "tier": null,
           "upsellTo": []
         }
